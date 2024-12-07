@@ -1,10 +1,20 @@
 import { useDispatch } from "react-redux";
-import { connectRequested } from "../redux/features/user/usersSlice";
+import {
+  connectionSucceeded,
+  connectRequested,
+} from "../redux/features/user/usersSlice";
 
-export const useWalletConnect = (path) => {
+export const useWalletConnect = () => {
   const dispatch = useDispatch();
   const connectionRequest = () => {
-    dispatch(connectRequested());
+    dispatch(
+      connectRequested({
+        callback: (account) => {
+          console.log("Web3 loaded successfully");
+          connectionSucceeded({ account });
+        },
+      }),
+    );
   };
   return { connectionRequest };
 };

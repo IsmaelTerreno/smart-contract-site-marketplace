@@ -1,26 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
-import {loadWeb3App} from "../../../lib/web3-utils/client";
+import { createSlice } from "@reduxjs/toolkit";
+import { loadWeb3App } from "../../../lib/web3-utils/client";
 
 const initialState = {
   isConnectedWallet: false,
-  account: null
+  account: null,
 };
 
 const usersSlice = createSlice({
-  name: 'users',
+  name: "users",
   initialState,
   reducers: {
+    connectRequested: (state, action) => {
+      loadWeb3App(action.payload.callback).then((r) =>
+        console.info("Web3 loaded successfully"),
+      );
+      state.isConnectedWallet = false;
+    },
     connectionSucceeded: (state, action) => {
       state.isConnectedWallet = true;
+      state.account = action.payload.account;
     },
-    connectRequested: (state) => {
-      loadWeb3App(() => {
-      }).then(r => console.log('Web3 loaded successfully'));
-      state.isConnectedWallet = false;
-    }
-  }
+  },
 });
-
 
 export const { connectionSucceeded, connectRequested } = usersSlice.actions;
 
