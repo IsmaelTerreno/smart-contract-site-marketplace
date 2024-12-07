@@ -11,7 +11,7 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     connectRequested: (state, action) => {
-      loadWeb3App(action.payload.callback).then((r) =>
+      loadWeb3App((accounts) => {}).then((r) =>
         console.info("Web3 loaded successfully"),
       );
       state.isConnectedWallet = false;
