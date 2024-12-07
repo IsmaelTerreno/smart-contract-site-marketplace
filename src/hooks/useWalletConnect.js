@@ -12,10 +12,10 @@ export const useWalletConnect = () => {
   };
 
   useEffect(() => {
-    const isConnectedWallet = window.ethereum.isConnected();
+    const isWeb3Eth = window.ethereum;
     const isMetaMaskInstalled = window.ethereum.isMetaMask;
 
-    if (isConnectedWallet && isMetaMaskInstalled) {
+    if (isWeb3Eth && isMetaMaskInstalled) {
       window.ethereum
         .request({ method: "eth_accounts" })
         .then((accounts) => {
@@ -33,6 +33,6 @@ export const useWalletConnect = () => {
           console.error("Error fetching accounts:", error);
         });
     }
-  }, [window.ethereum.isConnected, window.ethereum.isMetaMask]);
+  }, [dispatch]);
   return { connectionRequest };
 };
