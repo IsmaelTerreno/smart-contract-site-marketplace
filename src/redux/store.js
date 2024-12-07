@@ -1,8 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import usersSlice from './features/user/usersSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import usersSlice from "./features/user/usersSlice";
+import marketplacesSlice from "./features/user/marketplacesSlice";
 // Automatically adds the thunk middleware and the Redux DevTools extension
 export const store = configureStore({
   reducer: {
-    users: usersSlice
-  }
+    users: usersSlice,
+    marketplaces: marketplacesSlice,
+  },
 });
