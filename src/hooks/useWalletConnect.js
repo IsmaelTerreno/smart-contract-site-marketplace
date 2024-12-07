@@ -1,16 +1,21 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  accountAddressSelector,
   connectionSucceeded,
   connectRequested,
+  errorOnAccountsFetched,
+  isConnectedWalletSelector,
+  noAccountsFounded,
 } from "../redux/features/user/usersSlice";
 import { useEffect } from "react";
 
 export const useWalletConnect = () => {
   const dispatch = useDispatch();
+  const isConnectedWallet = useSelector(isConnectedWalletSelector);
+  const account = useSelector(accountAddressSelector);
   const connectionRequest = () => {
     dispatch(connectRequested());
   };
-
   useEffect(() => {
     const isWeb3Eth = window.ethereum;
     const isMetaMaskInstalled = window.ethereum.isMetaMask;
@@ -22,17 +27,22 @@ export const useWalletConnect = () => {
           if (accounts.length > 0) {
             dispatch(
               connectionSucceeded({
-                account: accounts[0],
+                accountAddress: accounts[0],
               }),
             );
           } else {
-            console.log("No accounts found");
+            dispatch(noAccountsFounded());
           }
         })
         .catch((error) => {
-          console.error("Error fetching accounts:", error);
+          dispatch(
+            errorOnAccountsFetched({
+              message: "Error fetching accounts: ",
+              error,
+            }),
+          );
         });
     }
   }, [dispatch]);
-  return { connectionRequest };
+  return { connectionRequest, isConnectedWallet, account };
 };

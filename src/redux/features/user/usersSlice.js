@@ -3,7 +3,7 @@ import { loadWeb3App } from "../../../lib/web3-utils/client";
 
 const initialState = {
   isConnectedWallet: false,
-  account: null,
+  accountAddress: null,
 };
 
 const usersSlice = createSlice({
@@ -26,11 +26,28 @@ const usersSlice = createSlice({
     },
     connectionSucceeded: (state, action) => {
       state.isConnectedWallet = true;
-      state.account = action.payload.account;
+      state.accountAddress = action.payload.accountAddress;
+    },
+    noAccountsFounded: (state) => {
+      state.isConnectedWallet = false;
+      state.accountAddress = null;
+    },
+    errorOnAccountsFetched: (state) => {
+      state.isConnectedWallet = false;
+      state.accountAddress = null;
     },
   },
 });
 
-export const { connectionSucceeded, connectRequested } = usersSlice.actions;
+export const isConnectedWalletSelector = (state) =>
+  state.users.isConnectedWallet;
+export const accountAddressSelector = (state) => state.users.accountAddress;
+
+export const {
+  connectionSucceeded,
+  connectRequested,
+  noAccountsFounded,
+  errorOnAccountsFetched,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;
