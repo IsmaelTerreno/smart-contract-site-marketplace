@@ -1,8 +1,10 @@
 import React from "react";
 import { useWalletConnect } from "./hooks/useWalletConnect";
+import { useMarketplaceContract } from "./hooks/useMarketplaceContract";
 
 const App = () => {
   const { connectionRequest, isConnectedWallet, account } = useWalletConnect();
+  const { contract } = useMarketplaceContract();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black">
       <h1 className="text-amber-800 text-center text-5xl pb-4">
@@ -20,6 +22,7 @@ const App = () => {
         <div className="mt-4 text-center">
           <p className="text-center">Connected wallet</p>
           <p>Account: {account}</p>
+          {contract && <p>Contract: {contract.address}</p>}
         </div>
       )}
     </div>
