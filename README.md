@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+---
+# Assessment Objective related to this project
+Develop a dApp (Decentralized Application) consisting of:
+1. Smart Contracts: Implement a decentralized token-based marketplace.
+2. Backend Service: Build a backend to interact with the smart contracts and manage EIP-712 signatures.
+3. Frontend GUI: Create a simple user interface for interacting with the marketplace.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Detailed Requirements
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+### Part 1: Smart Contracts
 
-### `npm start`
+1. Implement a Marketplace contract using ERC-20 tokens as the traded items.
+    - List Item: A user can list a certain number of ERC-20 tokens for sale at a specified price in Ether.
+    - Purchase Item: Another user can purchase the listed tokens by sending the required amount of Ether. The tokens are transferred to
+      the buyer.
+    - Withdraw Funds: Sellers can withdraw their earnings in Ether from the marketplace contract.
+2. EIP-712 Signed Message Interaction:
+    - Add a function that enables token transfers based on an EIP-712 signed message:
+    - Users can sign a message authorizing the marketplace to transfer tokens on their behalf.
+    - The contract verifies the signature before executing the transfer.
+    - Include a specific use case in the marketplace:
+    - Allow sellers to pre-authorize token listings using signed messages.
+3. Key Requirements:
+   Use Solidity and follow EVM-compatible standards.
+   Include events for important actions ( ItemListed, ItemPurchased, FundsWithdrawn).
+   Use OpenZeppelin libraries such as ERC-20 where possible.
+---
+### Part 2: Backend Service
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Build a backend service to:
+    - Query listed items and purchase history from the smart contract.
+    - Generate EIP-712-compliant messages for token transfers.
+      Facilitate API routes for:
+    - Listing items via signed messages ( POST /list).
+    - Querying all items ( GET /items).
+    - Purchasing item ( POST /purchase).
+    - Withdraw item ( POST /withdraw)
+2. Sell Tokens Directly (Optional Advanced Use Case):
+   Provide an API route ( POST /sell) to:
+    - Accept signed EIP-712 messages authorizing the backend to facilitate direct token transfers between users.
+    - Push the transfer transaction to the blockchain on behalf of the seller and buyer.
+3. Key Requirements:
+    - Use Node.js with Express, Nestjs or any other equivalent framework.
+    - Integrate Web3.js or ethers.js for contract interaction.
+    - Include utilities for signing messages on behalf of users (e.g., using a wallet or private key during testing).
+---
+### Part 3: Frontend GUI
+1. Build a simple GUI to interact with the backend and marketplace:
+    - Marketplace: Display all listed ERC-20 tokens, including name, price, and quantity.
+    - Listing Form: Allow users to list tokens for sale. Include an option to sign the listing with their wallet.
+    - Purchase Flow: Enable users to buy tokens by connecting their wallet.
+    - Withdraw Section: Allow sellers to withdraw their funds in Ether.
+2. Key Requirements:
+    - Use a modern frontend framework (React, Vue, etc.).
+    - Implement wallet integration using MetaMask, WalletConnect, or wagmi.
+    - Display detailed information about signed messages and their validation.
+      Bonus (Optional)
+      Add a test suite for:
+    - Smart contracts (using Hardhat or Foundry).
+    - EIP-712 message verification.
+    - Deploy the contract to a testnet (e.g., sepolia or zkSync Era) and provide the deployment address.
+    - Implement token price sorting or filtering on the frontend.
+    - Add off-chain caching of marketplace data for performance (e.g., using Redis).
