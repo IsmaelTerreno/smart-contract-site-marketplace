@@ -12,8 +12,7 @@ const TOKEN_ITEM_SELLER_CONTRACT_ADDRESS =
   process.env.REACT_APP_CONTRACT_ADDRESS_TOKEN_ITEM_SELLER;
 
 const getContractInstance = (contractAbi, contractAddress) => {
-  const web3InstanceLocal = new Web3(window.ethereum);
-  return new web3InstanceLocal.eth.Contract(contractAbi, contractAddress);
+  return new web3Instance.eth.Contract(contractAbi, contractAddress);
 };
 
 export const loadWeb3App = async () => {
