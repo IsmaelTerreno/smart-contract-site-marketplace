@@ -12,16 +12,15 @@ const usersSlice = createSlice({
   reducers: {
     connectRequested: (state) => {
       const onWeb3AccountsLoaded = (accounts) => {
-        console.log(accounts);
+        console.log("onWeb3AccountsLoaded", accounts);
+        state.dispatch(connectionSucceeded(accounts[0]));
       };
-
       loadWeb3App(onWeb3AccountsLoaded)
         .then((result) => {
           console.info("Web3 loaded successfully");
-          window.location.reload();
+          //window.location.reload();
         })
         .catch((error) => console.error("Error loading Web3:", error));
-
       state.isConnectedWallet = false;
     },
     connectionSucceeded: (state, action) => {

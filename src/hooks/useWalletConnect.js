@@ -18,7 +18,7 @@ export const useWalletConnect = () => {
   };
   useEffect(() => {
     const isWeb3Eth = window.ethereum;
-    const isMetaMaskInstalled = window.ethereum.isMetaMask;
+    const isMetaMaskInstalled = window.ethereum && window.ethereum.isMetaMask;
 
     if (isWeb3Eth && isMetaMaskInstalled) {
       window.ethereum
