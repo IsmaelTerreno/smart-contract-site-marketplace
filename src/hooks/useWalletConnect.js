@@ -23,8 +23,6 @@ export const useWalletConnect = () => {
     loadWeb3App(onWeb3AccountsLoaded)
       .then((result) => {
         console.info("Web3 loaded successfully");
-        //window.location.reload();
-        //state.isConnectedWallet = true;
       })
       .catch((error) => console.error("Error loading Web3:", error));
   };

@@ -89,3 +89,14 @@ const handleConnectionError = (error) => {
     console.error(error);
   }
 };
+
+export const getItemsMarketplace = async (accountToUse) => {
+  try {
+    const items = await marketplaceContractInstance.methods.getListings().call({
+      from: accountToUse,
+    });
+    return items;
+  } catch (error) {
+    return 0;
+  }
+};
