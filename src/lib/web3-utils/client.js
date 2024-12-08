@@ -6,12 +6,13 @@ export let userAccounts;
 export let marketplaceContractInstance;
 export let erc20MarketplaceItemContractInstance;
 export let web3Instance;
-const MARKETPLACE_CONTRACT_ADDRESS =
-  process.env.REACT_APP_MARKETPLACE_CONTRACT_ADDRESS;
-const TOKEN_ITEM_SELLER_CONTRACT_ADDRESS =
+export const MARKETPLACE_CONTRACT_ADDRESS =
+  process.env.REACT_APP_CONTRACT_ADDRESS_MARKETPLACE;
+export const TOKEN_ITEM_SELLER_CONTRACT_ADDRESS =
   process.env.REACT_APP_CONTRACT_ADDRESS_TOKEN_ITEM_SELLER;
+web3Instance = new Web3(window.ethereum);
 
-const getContractInstance = (contractAbi, contractAddress) => {
+export const getContractInstance = (contractAbi, contractAddress) => {
   return new web3Instance.eth.Contract(contractAbi, contractAddress);
 };
 
@@ -33,23 +34,35 @@ export const loadWeb3App = async (onWeb3AccountsLoaded) => {
     );
     handleConnectionError(error);
   }
-  try {
-    marketplaceContractInstance = getContractInstance(
-      marketplaceContractAbi.abi,
-      MARKETPLACE_CONTRACT_ADDRESS,
-    );
 
+  onWeb3AccountsLoaded(userAccounts);
+};
+export const loadSmartContracts = () => {
+  const { ethereum } = window;
+  if (!ethereum) {
+    alert("You have to install MetaMask!");
+    return;
+  }
+  try {
     erc20MarketplaceItemContractInstance = getContractInstance(
       erc20MarketplaceItemContractAbi.abi,
       TOKEN_ITEM_SELLER_CONTRACT_ADDRESS,
     );
+
+    console.log("ABI:", marketplaceContractAbi.abi);
+    console.log("Contract Address:", MARKETPLACE_CONTRACT_ADDRESS);
+    console.log("Web3 Instance:", web3Instance);
+
+    marketplaceContractInstance = getContractInstance(
+      marketplaceContractAbi.abi,
+      "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    );
+    console.log("Marketplace Contract Instance:", marketplaceContractInstance);
   } catch (error) {
     console.error("Error loading contract instance:", error);
     handleConnectionError(error);
   }
-  onWeb3AccountsLoaded(userAccounts);
 };
-
 const requestAccountAccess = async (ethereum) => {
   web3Instance = new Web3(ethereum);
   await ethereum.request({ method: "eth_requestAccounts" });

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  contract: null,
+  contractAddress: null,
+  isLoaded: false,
 };
 
 const marketplacesSlice = createSlice({
@@ -9,7 +10,8 @@ const marketplacesSlice = createSlice({
   initialState,
   reducers: {
     contractConnected: (state, action) => {
-      state.contract = action.payload.contract;
+      state.contract = action.payload.contractAddress;
+      state.isLoaded = true;
     },
   },
 });
