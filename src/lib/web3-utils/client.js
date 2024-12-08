@@ -49,15 +49,14 @@ export const loadSmartContracts = () => {
       TOKEN_ITEM_SELLER_CONTRACT_ADDRESS,
     );
 
-    console.log("ABI:", marketplaceContractAbi.abi);
-    console.log("Contract Address:", MARKETPLACE_CONTRACT_ADDRESS);
-    console.log("Web3 Instance:", web3Instance);
+    console.info("Contract Address:", MARKETPLACE_CONTRACT_ADDRESS);
+    console.info("Web3 Instance:", web3Instance);
 
     marketplaceContractInstance = getContractInstance(
       marketplaceContractAbi.abi,
       "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
     );
-    console.log("Marketplace Contract Instance:", marketplaceContractInstance);
+    console.info("Marketplace Contract Instance:", marketplaceContractInstance);
   } catch (error) {
     console.error("Error loading contract instance:", error);
     handleConnectionError(error);
