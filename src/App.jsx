@@ -4,7 +4,7 @@ import { useMarketplaceContract } from "./hooks/useMarketplaceContract";
 
 const App = () => {
   const { connectionRequest, isConnectedWallet, account } = useWalletConnect();
-  const { contractAddress, itemsForSale } = useMarketplaceContract();
+  const { contractAddress, itemsForSale, buyItem } = useMarketplaceContract();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black">
       <h1 className="text-amber-800 text-center text-5xl pb-4">
@@ -30,11 +30,20 @@ const App = () => {
               </h2>
               <div>
                 {itemsForSale.map((item) => (
-                  <div key={item.listingId} className="bg-gray-200 p-4">
+                  <div
+                    key={item.listingId}
+                    className="bg-white shadow-md rounded-lg p-6 m-4 border border-gray-300"
+                  >
                     <p>Token: {item.tokenAddress}</p>
                     <p>Amount: {item.amount}</p>
                     <p>Price: {item.price}</p>
                     <p>Seller: {item.sellerAddress}</p>
+                    <button
+                      onClick={() => buyItem(item.listingId)}
+                      className="px-6 py-3 mt-4 text-md font-bold text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition ease-in-out duration-300"
+                    >
+                      Buy Item
+                    </button>
                   </div>
                 ))}
               </div>

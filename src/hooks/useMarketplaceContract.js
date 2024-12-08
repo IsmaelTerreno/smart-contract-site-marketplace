@@ -22,7 +22,9 @@ export const useMarketplaceContract = () => {
   const isConnectedWallet = useSelector(isConnectedWalletSelector);
   const account = useSelector(accountAddressSelector);
   const itemsForSale = useSelector((state) => state.marketplaces.itemsForSale);
-
+  const buyItem = async (listingId) => {
+    console.log("Buy item with listingId:", listingId);
+  };
   useEffect(() => {
     const getItems = async () => {
       if (marketplaceContractInstance) {
@@ -54,5 +56,5 @@ export const useMarketplaceContract = () => {
       }
     }
   }, [isConnectedWallet, dispatch, account]);
-  return { contractAddress, itemsForSale };
+  return { contractAddress, itemsForSale, buyItem };
 };
