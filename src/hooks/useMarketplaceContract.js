@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  contractAddressSelector,
   contractConnected,
-  contractSelector,
   itemsForSaleLoaded,
 } from "../redux/features/marketplace/marketplacesSlice";
 import { useEffect } from "react";
@@ -18,9 +18,10 @@ import {
 
 export const useMarketplaceContract = () => {
   const dispatch = useDispatch();
-  const contract = useSelector(contractSelector);
+  const contractAddress = useSelector(contractAddressSelector);
   const isConnectedWallet = useSelector(isConnectedWalletSelector);
   const account = useSelector(accountAddressSelector);
+  const itemsForSale = useSelector((state) => state.marketplaces.itemsForSale);
 
   useEffect(() => {
     const getItems = async () => {
@@ -53,5 +54,5 @@ export const useMarketplaceContract = () => {
       }
     }
   }, [isConnectedWallet, dispatch, account]);
-  return { contract };
+  return { contractAddress, itemsForSale };
 };
