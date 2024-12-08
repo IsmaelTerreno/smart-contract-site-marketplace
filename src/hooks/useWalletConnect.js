@@ -8,6 +8,7 @@ import {
   noAccountsFounded,
 } from "../redux/features/user/usersSlice";
 import { useEffect } from "react";
+import { loadWeb3App } from "../lib/web3-utils/client";
 
 export const useWalletConnect = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,17 @@ export const useWalletConnect = () => {
   const account = useSelector(accountAddressSelector);
   const connectionRequest = () => {
     dispatch(connectRequested());
+    const onWeb3AccountsLoaded = (accounts) => {
+      console.log("onWeb3AccountsLoaded", accounts);
+      dispatch(connectionSucceeded({ accountAddress: accounts[0] }));
+    };
+    loadWeb3App(onWeb3AccountsLoaded)
+      .then((result) => {
+        console.info("Web3 loaded successfully");
+        //window.location.reload();
+        //state.isConnectedWallet = true;
+      })
+      .catch((error) => console.error("Error loading Web3:", error));
   };
   useEffect(() => {
     const isWeb3Eth = window.ethereum;

@@ -15,7 +15,7 @@ const getContractInstance = (contractAbi, contractAddress) => {
   return new web3Instance.eth.Contract(contractAbi, contractAddress);
 };
 
-export const loadWeb3App = async () => {
+export const loadWeb3App = async (onWeb3AccountsLoaded) => {
   const { ethereum } = window;
 
   if (!ethereum) {
@@ -47,6 +47,7 @@ export const loadWeb3App = async () => {
     console.error("Error loading contract instance:", error);
     handleConnectionError(error);
   }
+  onWeb3AccountsLoaded(userAccounts);
 };
 
 const requestAccountAccess = async (ethereum) => {
