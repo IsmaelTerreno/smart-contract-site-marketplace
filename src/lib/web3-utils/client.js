@@ -97,6 +97,7 @@ export const getItemsMarketplace = async (accountToUse) => {
     });
     return items;
   } catch (error) {
+    console.error("Error getting items from marketplace:", error);
     return 0;
   }
 };

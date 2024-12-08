@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   contractConnected,
   contractSelector,
-} from "../redux/features/user/marketplacesSlice";
+  itemsForSaleLoaded,
+} from "../redux/features/marketplace/marketplacesSlice";
 import { useEffect } from "react";
 import {
   accountAddressSelector,
@@ -25,7 +26,8 @@ export const useMarketplaceContract = () => {
     const getItems = async () => {
       if (marketplaceContractInstance) {
         const items = await getItemsMarketplace(account);
-        console.log("Items:", items);
+        console.log("Items from smart contract:", items);
+        return items;
       }
     };
     if (isConnectedWallet) {
@@ -35,7 +37,18 @@ export const useMarketplaceContract = () => {
           contractConnected({ contractAddress: MARKETPLACE_CONTRACT_ADDRESS }),
         );
         getItems().then((itemResult) => {
-          console.log("Items loaded");
+          const activeItems = itemResult
+            .filter((item) => item.active)
+            .map((item) => {
+              return {
+                listingId: item.id.toString(),
+                tokenAddress: item.token,
+                amount: item.amount.toString(),
+                price: item.price.toString(),
+                sellerAddress: item.seller,
+              };
+            });
+          dispatch(itemsForSaleLoaded({ items: activeItems }));
         });
       }
     }

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   contractAddress: null,
   isLoaded: false,
+  itemsForSale: [],
 };
 
 const marketplacesSlice = createSlice({
@@ -13,11 +14,15 @@ const marketplacesSlice = createSlice({
       state.contract = action.payload.contractAddress;
       state.isLoaded = true;
     },
+    itemsForSaleLoaded: (state, action) => {
+      state.itemsForSale = action.payload.items;
+    },
   },
 });
 
 export const contractSelector = (state) => state.marketplaces.contract;
 
-export const { contractConnected } = marketplacesSlice.actions;
+export const { contractConnected, itemsForSaleLoaded } =
+  marketplacesSlice.actions;
 
 export default marketplacesSlice.reducer;
